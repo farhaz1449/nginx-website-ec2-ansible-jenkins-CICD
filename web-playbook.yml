@@ -36,5 +36,6 @@
       copy:
         src: "{{ item }}"
         dest: /var/www/html/
+        remote_src: no
       with_fileglob:
         - "web/*"
