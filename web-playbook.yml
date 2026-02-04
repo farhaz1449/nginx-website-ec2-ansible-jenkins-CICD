@@ -1,0 +1,33 @@
+- hosts: web-server
+  become: true                            
+
+  tasks:
+    # Updating Repositories
+    - name: update apt
+      apt: 
+        update_cache=yes
+    
+    # Install NGINX for serving the Frontend Application
+    - name: install nginx with apt
+      apt:
+        name=nginx
+        state=present
+
+    # Delete the default homepage of the nginx server 
+    - name: Deleting default landing page
+      file:
+        path=/var/www/html
+        state=absent
+    
+    # This part is extra which will create the html directory
+    - name: Re-creating the entire directory
+      file:
+        path=/var/www/html
+        state=directory
+
+    - name: Copying web content from the host machine
+      copy:
+        src: "{{ item }}"
+        dest: /var/www/html/
+      with_fileglob:
+        - "web/*"
