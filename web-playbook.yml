@@ -13,6 +13,13 @@
         name=nginx
         state=present
 
+    # Ensure NGINX is running
+    - name: ensure nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
     # Delete the default homepage of the nginx server 
     - name: Deleting default landing page
       file:
